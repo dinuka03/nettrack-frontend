@@ -77,3 +77,4 @@ export function getStatusConfig(status, networkError, isRetainingPrevious, lastA
       }
   }
 }
+

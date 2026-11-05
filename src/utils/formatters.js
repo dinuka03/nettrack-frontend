@@ -104,7 +104,7 @@ export function formatDuration(seconds) {
 }
 
 /**
- * Formats an ISO-8601 UTC timestamp string for display.
+ * Formats an ISO-8601 UTC timestamp string for display (time only).
  *
  * @param {string|null|undefined} isoString
  * @returns {string} Formatted local time or '—'
@@ -120,6 +120,33 @@ export function formatTimestamp(isoString) {
   }
 
   return date.toLocaleTimeString(undefined, {
+    hour: '2-digit',
+    minute: '2-digit',
+    second: '2-digit',
+    hour12: false,
+  })
+}
+
+/**
+ * Formats an ISO-8601 UTC timestamp string for display (date and time).
+ *
+ * @param {string|null|undefined} isoString
+ * @returns {string} Formatted local date and time or '—'
+ */
+export function formatDateTime(isoString) {
+  if (!isoString || typeof isoString !== 'string') {
+    return '—'
+  }
+
+  const date = new Date(isoString)
+  if (Number.isNaN(date.getTime())) {
+    return '—'
+  }
+
+  return date.toLocaleString(undefined, {
+    year: 'numeric',
+    month: 'short',
+    day: '2-digit',
     hour: '2-digit',
     minute: '2-digit',
     second: '2-digit',

@@ -114,3 +114,4 @@ export function useCurrentNetwork(pollIntervalMs = 1000) {
     refetch: fetchState,
   }
 }
+
