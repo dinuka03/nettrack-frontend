@@ -62,7 +62,11 @@ The Vite development server will start at:
 http://localhost:5173
 ```
 
-Vite proxies all relative `/api/*` requests (such as `/api/network/current` and `/api/network/history?limit=100`) to `http://localhost:8080` without requiring CORS configuration on the backend.
+Vite proxies all relative `/api/*` requests (such as `/api/network/current` and `/api/network/history?limit=100`) to `http://[::1]:8080` (IPv6 loopback) without requiring CORS configuration on the backend.
+
+> **Note**: The proxy target is `http://[::1]:8080` rather than `http://localhost:8080` because the Spring Boot backend binds to the IPv6 loopback address (`[::1]`) by default on this machine. If your JVM resolves `localhost` to `127.0.0.1` (IPv4), update the `target` in `vite.config.js` accordingly.
+
+> **Live monitoring requirement**: For live Wi-Fi rate data, the Spring Boot backend process must run in the **host network namespace** where `/proc/net/dev` exposes the `wlp3s0` interface. When started from within a sandboxed environment (e.g. a container or restricted shell), `/proc/net/dev` may only expose `lo`, and the backend will report `status: "ERROR"` indefinitely. Launch the backend directly on the host OS with `mvn spring-boot:run -Dspring-boot.run.arguments="--nettrack.monitoring.enabled=true"`.
 
 ### 3. Run Automated Tests
 
