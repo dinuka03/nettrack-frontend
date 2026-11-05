@@ -73,3 +73,4 @@ nettrack-frontend/
     ├── App.jsx         # Root NetTrack placeholder component
     └── index.css       # Base styles and responsive layout
 ```
+
